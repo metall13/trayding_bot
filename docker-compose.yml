@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  bybit-arbitrage-bot:
+    build: .
+    container_name: bybit-arbitrage-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - BYBIT_API_KEY=${BYBIT_API_KEY}
+      - BYBIT_API_SECRET=${BYBIT_API_SECRET}
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - MAX_TRADE_AMOUNT=${MAX_TRADE_AMOUNT}
+      - TRADING_SYMBOLS=${TRADING_SYMBOLS}
+      - BYBIT_TESTNET=${BYBIT_TESTNET}
+    volumes:
+      - ./logs:/root/logs
+    networks:
+      - bot-network
+
+networks:
+  bot-network:
+    driver: bridge
